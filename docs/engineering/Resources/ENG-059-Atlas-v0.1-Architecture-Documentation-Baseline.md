@@ -1,4 +1,4 @@
-ENG-059 — Atlas v0.1 Architecture Documentation Baseline
+# ENG-059 — Atlas v0.1 Architecture Documentation Baseline
 
 **Document ID:** ENG-059  
 **Title:** Atlas v0.1 Architecture Documentation Baseline  
@@ -68,16 +68,19 @@ UI / AI
 The canonical interaction path is:
 
 ```text
-User / UI / Agent / External System
-                ↓
-          AtlasCommand
-                ↓
-        AtlasApplication
-                ↓
-           AtlasProject
-                ↓
-       Canonical Atlas State
+User / UI / Agent
+        ↓
+  AtlasCommand
+        ↓
+AtlasApplication
+        ↓
+ AtlasProject
+        ↓
+Canonical Atlas State
 ```
+
+Web, external-system, or other future integration layers may sit above this
+application boundary, but they do not become canonical Atlas state owners.
 
 Every higher-level interaction ultimately operates against the canonical Atlas model rather than creating a competing engineering representation.
 
@@ -316,15 +319,10 @@ AtlasSpatialStateRegistry
 
 rather than embedding spatial state into `AtlasResource`.
 
-The established defaults are:
-
-```text
-Position = (0, 0, 0)
-Rotation = (0, 0, 0)
-Scale    = (1, 1, 1)
-```
-
-Move, Rotate, and Scale operate on the canonical spatial state associated with the Resource's AtlasID.
+Move, Rotate, and Scale operate on the canonical spatial state
+associated with the Resource's AtlasID. Exact default values are an
+implementation-level detail and are not elevated here into a separate
+architectural invariant.
 
 ---
 
@@ -612,6 +610,10 @@ Can external source information remain separate from canonical identity?
 
 ### History
 Can future revisions be introduced without replacing the current Resource model?
+
+**Provenance and history are future architectural extension considerations only.
+Atlas v0.1 does not claim to implement a dedicated provenance or history
+subsystem.**
 
 ### Agents
 Can Agents operate on the subsystem through Atlas interfaces?
