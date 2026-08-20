@@ -1,6 +1,6 @@
 # ENG-057 — Atlas Resource Duplicate
 
-**Status:** Proposed  
+**Status:** Complete
 **Phase:** Phase 11 — Resource Editing  
 **Depends On:** ENG-056 — Atlas Resource Delete  
 **Previous:** ENG-056 — Atlas Resource Delete  

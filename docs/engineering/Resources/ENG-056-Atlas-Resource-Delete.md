@@ -1,5 +1,5 @@
 ENG-056 — Atlas Resource Delete
-Status: Proposed
+Status: Complete
 Phase: Phase 11 — Resource Editing
 Depends On: ENG-055 — Atlas Resource Scale
 Previous: ENG-055 — Atlas Resource Scale

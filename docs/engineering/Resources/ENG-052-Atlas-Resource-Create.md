@@ -1,5 +1,5 @@
 ENG-052 — Atlas Resource Create
-Status: Proposed / RED
+Status: Complete
 Phase: Phase 11 — Resource Editing
 Depends On: ENG-001 through existing Resource foundation, ENG-010 Registry, ENG-039 Application Boundary, ENG-040/045 Workspace/UI, Phase 10 completion
 Previous: ENG-051 — Atlas Basic Editing

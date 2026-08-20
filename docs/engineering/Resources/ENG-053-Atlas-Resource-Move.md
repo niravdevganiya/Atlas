@@ -1,6 +1,6 @@
 # ENG-053 — Atlas Resource Move
 
-**Status:** Proposed  
+**Status:** Complete  
 **Phase:** Phase 11 — Resource Editing  
 **Depends On:** ENG-052 — Resource Create  
 **Previous:** ENG-052 — Resource Create  

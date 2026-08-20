@@ -1,6 +1,6 @@
 ENG-055 — Atlas Resource Scale
 
-Status: Proposed
+Status: Complete
 Phase: Phase 11 — Resource Editing
 Depends On: ENG-054 — Atlas Resource Rotate
 Previous: ENG-054 — Atlas Resource Rotate

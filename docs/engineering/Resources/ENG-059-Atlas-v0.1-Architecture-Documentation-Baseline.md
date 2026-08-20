@@ -3,7 +3,7 @@
 **Document ID:** ENG-059  
 **Title:** Atlas v0.1 Architecture Documentation Baseline  
 **Version:** 0.1.0  
-**Status:** Proposed  
+**Status:** Complete  
 **Phase:** Phase 13 — Documentation  
 **Previous:** ENG-058 — Atlas Core Validation Baseline  
 **Depends On:** ENG-001 through ENG-058  

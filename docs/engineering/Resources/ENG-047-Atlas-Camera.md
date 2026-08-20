@@ -3,7 +3,7 @@ ENG-047 — Atlas Camera
 **Document ID:** ENG-047  
 **Title:** Atlas Camera  
 **Version:** 0.1.0  
-**Status:** Proposed  
+**Status:** Complete  
 **Depends On:** ENG-039 — Atlas UI Architecture, ENG-040 — Atlas UI Application Shell, ENG-046 — Atlas Scene  
 **Phase:** Phase 10 — 3D Workspace  
 **Implementation:** Atlas Application / 3D Workspace layer

@@ -3,7 +3,7 @@
 **Document ID:** ENG-046  
 **Title:** Atlas Scene  
 **Version:** 0.2.0  
-**Status:** Proposed  
+**Status:** Complete  
 **Depends On:** ENG-039 — Atlas UI Architecture, ENG-040 — Atlas UI Application Shell, ENG-045 — Atlas Panels  
 **Phase:** Phase 10 — 3D Workspace  
 **Implementation:** Atlas Application / 3D Workspace layer
