@@ -178,9 +178,9 @@ If an invalid object is submitted at a validation boundary, the established impl
 
 ---
 
-# 4. Understanding the Atlas Workspace
+# 4. Understanding the Atlas Application and Workspace Model
 
-Atlas v0.1 includes the established UI/application architecture developed through the UI milestones.
+Atlas v0.1 includes the established application and framework-independent presentation architecture developed through the UI milestones.
 
 The implemented workspace concepts include:
 
@@ -196,9 +196,17 @@ The implemented workspace concepts include:
 - Gizmo
 - Basic Editing
 
-These are user-facing workspace capabilities.
+These are implemented Atlas application/presentation capabilities and contracts. They should not be interpreted as a claim that v0.1 provides a complete interactive graphical frontend or renderer.
 
-They do not replace the canonical Project/Resource model.
+The workspace is a presentation and interaction layer over the canonical Atlas model.
+
+It does not replace:
+
+- the canonical Resource model,
+- the Resource Registry,
+- the Relationship Graph,
+- the Spatial State Registry,
+- or the Validation architecture.
 
 ---
 
@@ -218,9 +226,11 @@ Users should therefore treat Dashboard information as a view of Project state ra
 
 The Explorer provides navigation through the Project and its Resources.
 
-Users can use it to locate Resources and work with the established Resource presentation flow.
+It establishes the implemented Resource presentation/navigation flow.
 
 The Explorer does not create a second copy of the Project.
+
+A complete graphical frontend or production navigation experience is not implied by the existence of the Explorer application model.
 
 ---
 
@@ -230,7 +240,7 @@ The Inspector provides detailed Resource information.
 
 It is intended for inspecting the selected Resource and its properties/metadata.
 
-The Inspector is read-oriented presentation infrastructure and does not become a second Resource Registry or Resource Graph.
+The Inspector is a presentation surface and does not become a second Resource Registry or Resource Graph.
 
 When a Resource is selected, the Inspector can present information from the canonical Resource state.
 
@@ -238,7 +248,7 @@ When a Resource is selected, the Inspector can present information from the cano
 
 # 8. Toolbar
 
-The Toolbar provides user access to the implemented editing actions.
+The Toolbar provides an application/presentation entry point for the implemented editing operations.
 
 The Resource editing capabilities established in v0.1 are:
 
@@ -251,9 +261,9 @@ Delete
 Duplicate
 ```
 
-The Toolbar is a presentation entry point.
+The Toolbar does not own the engineering mutation.
 
-The actual engineering mutation is performed through the established Application/Command boundary.
+The actual engineering operation is performed through the established Application/Command boundary.
 
 ---
 
@@ -274,39 +284,51 @@ It should not be confused with:
 
 # 10. Scene
 
-The Scene represents the 3D workspace/presentation structure.
+The Scene represents the framework-independent 3D workspace/presentation model.
 
 A SceneNode is not an AtlasResource.
 
-The Scene therefore provides a presentation representation of engineering objects without becoming a second engineering model.
+The Scene provides presentation structures without becoming a second engineering model.
 
-Users can interact with the Scene while the canonical Atlas model remains authoritative.
+The v0.1 Scene architecture is renderer-independent. It does not itself implement:
+
+- a production renderer,
+- WebGL/WebGPU/Three.js integration,
+- raycasting,
+- input event handling,
+- persistence,
+- exchange,
+- or agent execution.
+
+The canonical Atlas model remains authoritative.
 
 ---
 
 # 11. Camera
 
-The Camera controls the viewport's viewing state.
+The Camera represents viewport viewing state within the workspace model.
 
 Camera state is presentation state.
 
-Changing the camera does not change a Resource's engineering identity.
+Changing camera state does not change a Resource's engineering identity.
+
+A production graphics viewport or renderer is outside the verified v0.1 foundation.
 
 ---
 
 # 12. Navigation
 
-Navigation controls how users move through the workspace.
+Navigation represents workspace navigation state.
 
 Navigation state is separate from Project and Resource state.
 
-Viewport navigation should therefore not be interpreted as an engineering modification.
+Changing navigation state does not itself constitute an engineering modification.
 
 ---
 
 # 13. Selection
 
-Selection identifies a Resource for the current workspace context.
+Selection identifies a Resource for the current workspace/application context.
 
 Selection is based on Atlas identity but is not itself canonical Resource ownership.
 
@@ -316,13 +338,19 @@ Selecting a Resource does not copy or transfer the Resource into the UI.
 
 # 14. Gizmo
 
-The Gizmo provides interactive spatial editing within the workspace.
+The Gizmo provides presentation state associated with spatial editing workflows.
 
-Its role is presentation/application interaction.
+In v0.1, the Gizmo does not itself perform:
 
-The Gizmo does not own canonical Resource state.
+- SceneNode transformations,
+- rendering,
+- input event handling,
+- raycasting,
+- or engineering-state mutation.
 
-When an editing operation is committed, the established application command boundary is responsible for changing canonical spatial state.
+Resource Move, Rotate, and Scale operations are implemented through the canonical Resource Editing and Application/Command contracts.
+
+The Gizmo therefore should be understood as workspace/presentation infrastructure rather than a second transformation engine.
 
 ---
 
@@ -330,10 +358,10 @@ When an editing operation is committed, the established application command boun
 
 Atlas v0.1 supports Resource creation.
 
-The user-facing workflow is:
+The conceptual application workflow is:
 
 ```text
-Choose Create
+Invoke the Create Resource application operation
       ↓
 Provide the required Resource creation information
       ↓
@@ -341,14 +369,14 @@ Specify the Resource classification
       ↓
 Optionally provide the Resource name
       ↓
-Submit the create operation
+Submit the operation
       ↓
 Atlas creates the Resource
       ↓
 Resource becomes part of the Project's canonical Resource Registry
 ```
 
-The exact input fields and command surface are defined by the implemented application/UI layer.
+The exact input fields and command surface are defined by the implemented application layer.
 
 Creation establishes the Resource's canonical identity.
 
@@ -361,9 +389,9 @@ A created Resource is not merely a visual Scene object.
 A typical inspection workflow is:
 
 ```text
-Select Resource
+Identify / select Resource through an available application surface
       ↓
-Open / use Inspector
+Use the Inspector/application inspection surface
       ↓
 Review Resource information
 ```
@@ -386,12 +414,12 @@ The Inspector presents canonical state; it does not become the owner of that sta
 
 Resources can be associated with a Classification managed by the Project.
 
-The user workflow is:
+The application-level workflow is:
 
 ```text
-Create or select Resource
+Create or identify Resource
       ↓
-Choose an available Classification
+Choose an available Classification through the supported application surface
       ↓
 Associate the Classification with the Resource
       ↓
@@ -424,12 +452,12 @@ Spatial transformation belongs to the canonical Spatial State system.
 
 Atlas v0.1 supports Resource Move.
 
-The conceptual workflow is:
+The application-level workflow is:
 
 ```text
-Select Resource
+Identify Resource
       ↓
-Choose Move
+Invoke the Move Resource application operation
       ↓
 Specify position
       ↓
@@ -458,12 +486,12 @@ A failed Move must not partially mutate canonical spatial state.
 
 Atlas v0.1 supports Resource Rotate.
 
-The workflow is:
+The application-level workflow is:
 
 ```text
-Select Resource
+Identify Resource
       ↓
-Choose Rotate
+Invoke the Rotate Resource application operation
       ↓
 Specify rotation
       ↓
@@ -482,12 +510,12 @@ Rotation changes spatial state, not Resource identity.
 
 Atlas v0.1 supports Resource Scale.
 
-The workflow is:
+The application-level workflow is:
 
 ```text
-Select Resource
+Identify Resource
       ↓
-Choose Scale
+Invoke the Scale Resource application operation
       ↓
 Specify scale
       ↓
@@ -512,14 +540,14 @@ The established command validates the Resource identity and scale mapping before
 
 Atlas v0.1 supports Resource Delete.
 
-The conceptual workflow is:
+The conceptual application workflow is:
 
 ```text
-Select Resource
+Identify Resource
       ↓
-Choose Delete
+Invoke the Delete Resource application operation
       ↓
-Confirm / submit the operation as required by the interface
+Confirm / submit the operation as required by the available application surface
       ↓
 Atlas removes the canonical Resource
 ```
@@ -534,12 +562,12 @@ The implementation is designed to preserve project integrity and avoid accidenta
 
 Atlas v0.1 supports Resource Duplicate.
 
-The workflow is:
+The application-level workflow is:
 
 ```text
-Select Resource
+Identify Resource
       ↓
-Choose Duplicate
+Invoke the supported Resource Duplicate operation
       ↓
 Submit duplication operation
       ↓
@@ -556,14 +584,14 @@ Duplication must not create two UI representations that secretly share one engin
 
 Atlas represents relationships explicitly.
 
-A relationship workflow conceptually follows:
+The application-level relationship workflow conceptually follows:
 
 ```text
 Identify source Resource
       ↓
 Identify target Resource
       ↓
-Create the supported relationship
+Invoke the supported relationship operation
       ↓
 Atlas validates the relationship
       ↓
@@ -582,7 +610,7 @@ Invalid relationship objects are rejected by the established Graph boundary.
 
 Atlas v0.1 includes canonical Resource validation.
 
-The user-facing concept is:
+The user/application-level concept is:
 
 ```text
 Resource
@@ -610,20 +638,19 @@ Running validation does not modify:
 
 # 26. Understanding Validation Failures
 
-When Atlas rejects invalid input, the user should treat the result as an indication that the requested operation violates an established contract.
-
-Typical categories of invalid input include:
+At the application/API boundary, invalid requests may include:
 
 - invalid Resource identity,
-- invalid object type,
 - invalid spatial values,
 - missing required data,
 - invalid relationship data,
 - invalid Resource state.
 
-The exact error type and message depend on the specific API or operation.
+These requests are rejected according to the specific operation's established contract.
 
-Users should not assume that all failures have the same error format.
+Invalid object types are also rejected at relevant engineering boundaries. This is primarily an API/application contract rather than a normal graphical-user error.
+
+The exact error type and message depend on the specific API or operation.
 
 ---
 
@@ -638,14 +665,30 @@ Canonical Atlas Project
         ↓
 Atlas serialization
         ↓
-JSON representation
+UTF-8 JSON representation
         ↓
 Persistent project file
 ```
 
 Saving serializes canonical project state.
 
-Serialization is not a second Resource model.
+The established Save/Load contract includes preservation of supported project information such as:
+
+- project identity,
+- metadata,
+- Resources,
+- Resource identity,
+- properties,
+- semantic information,
+- lifecycle,
+- relationships,
+- classifications and classification hierarchy.
+
+Saving does not mutate the source Project.
+
+The serialization architecture is not a second Resource model.
+
+Existing project files are not overwritten unless overwrite is explicitly requested.
 
 ---
 
@@ -658,30 +701,22 @@ Project file
       ↓
 Atlas deserialization
       ↓
-Canonical Atlas Project
+New canonical Atlas Project instance
 ```
 
-The established serialization architecture preserves the supported Project structures.
+The established Load contract reconstructs a separate Project instance from the serialized representation.
 
-These include important information such as:
+Supported Resource, relationship, classification, and project information is restored according to the serialization contract.
 
-- project identity,
-- metadata,
-- classifications,
-- Resources,
-- Resource identity,
-- properties,
-- semantic information,
-- lifecycle,
-- relationships.
+Missing or invalid project files are rejected rather than silently accepted.
 
-Relationship endpoints use stable Resource identity rather than recursively embedding duplicate Resource objects.
+The serializer is reused through the established Project persistence boundary rather than introducing a second persistence model.
 
 ---
 
 # 29. Import and Export
 
-Atlas v0.1 includes the generic Import/Export boundary established by ENG-038.
+Atlas v0.1 defines a generic Import/Export adapter boundary.
 
 The architectural workflow is:
 
@@ -705,11 +740,13 @@ External Representation
 
 The canonical Atlas model remains authoritative.
 
+The generic boundary does **not** mean that every external engineering format is supported.
+
+No concrete external engineering-format adapter is part of the verified v0.1 capability unless separately implemented and verified.
+
 ---
 
 # 30. Concrete File Formats and External Systems
-
-The generic Import/Export architecture does **not** mean that every external engineering format is supported.
 
 The following are outside the verified v0.1 concrete capability:
 
@@ -725,7 +762,7 @@ The following are outside the verified v0.1 concrete capability:
 - remote synchronization
 - external-system synchronization
 
-These must not be presented as available Atlas v0.1 workflows.
+The existence of the generic Import/Export boundary must not be interpreted as support for these formats or systems.
 
 ---
 
@@ -766,9 +803,9 @@ Those capabilities are outside the verified v0.1 scope unless independently impl
 
 ---
 
-# 33. A Typical v0.1 Resource Workflow
+# 33. Typical v0.1 Resource Workflow (Conceptual)
 
-A complete conceptual workflow is:
+A typical application-level workflow is:
 
 ```text
 Create / Open Project
@@ -788,9 +825,9 @@ Validate
 Save
 ```
 
-The exact UI sequence may vary according to the implemented application surface.
+This sequence describes the canonical application-level workflow. It is **not** a claim that a complete graphical frontend currently exposes every step as a clickable UI workflow.
 
-The underlying canonical ownership remains the same.
+The exact application surface may vary according to the implemented interface.
 
 ---
 
@@ -819,42 +856,46 @@ AtlasID remains the canonical engineering identity.
 
 ---
 
-# 35. Understanding the 3D View
+# 35. Understanding the 3D Workspace Model
 
-The 3D view is a workspace representation of Atlas state.
+Atlas v0.1 defines a framework-independent 3D workspace model.
 
-Users should distinguish:
+It represents Scene and SceneNode presentation state without requiring a renderer such as Three.js, WebGL, WebGPU, or another graphics framework.
+
+The conceptual separation is:
 
 ```text
 Engineering State
     ↓
 Resource + Spatial State
 
-Presentation
+3D Presentation Model
     ↓
-Scene + SceneNode + Camera + Selection + Gizmo
+Scene + SceneNode
+
+Separate Workspace State
+    ↓
+Camera + Navigation + Selection + Gizmo
 ```
 
-Changing the viewport camera is not an engineering change.
+A production renderer, viewport implementation, picking/raycasting, and interactive graphics frontend are outside this v0.1 foundation.
 
-Selecting an object is not transferring Resource ownership to the viewport.
-
-A SceneNode is not itself an Atlas Resource.
+Changing presentation state does not itself change canonical engineering identity.
 
 ---
 
-# 36. User Workflow: Select and Edit
+# 36. User Workflow: Select and Edit (Conceptual)
 
-The basic editing workflow is:
+The application-level editing workflow is:
 
 ```text
-Explorer / Scene
+Explorer / available application surface
       ↓
-Select Resource
+Identify Resource
       ↓
 Inspect Resource
       ↓
-Choose editing operation
+Invoke the required editing operation
       ↓
 Provide operation input
       ↓
@@ -862,21 +903,21 @@ Atlas validates
       ↓
 Canonical state changes
       ↓
-UI reflects the updated state
+Available presentation surface reflects the updated state
 ```
 
-The UI is a presentation surface over the canonical model.
+This describes the application/domain workflow and does not imply a specific renderer, mouse interaction model, or graphical frontend implementation.
 
 ---
 
 # 37. User Workflow: Inspect → Edit → Validate
 
-A recommended v0.1 workflow is:
+A recommended conceptual v0.1 workflow is:
 
 ```text
-1. Select Resource
+1. Identify Resource
 2. Inspect identity/classification/properties
-3. Perform the required edit
+3. Perform the required application-level edit
 4. Validate the resulting Resource
 5. Review validation results
 6. Save the Project
@@ -936,7 +977,7 @@ Operations with missing required information are rejected according to their com
 
 When an operation fails:
 
-1. Confirm that the correct Resource is selected.
+1. Confirm that the correct Resource is being targeted.
 2. Confirm that the Resource still exists in the Project.
 3. Confirm that the requested values are valid.
 4. Check the operation's validation/error result.
@@ -949,7 +990,7 @@ For engineering-level investigation, consult the Developer Guide and engineering
 
 # 42. User vs Developer Documentation
 
-This guide explains user workflows.
+This guide explains user/application workflows.
 
 The Developer Guide explains:
 
@@ -1018,11 +1059,13 @@ Core Validation
 
 The exact APIs and behavior are defined by the implementation and tests.
 
+The UI and workspace entries above refer to their verified application/presentation models and contracts; they do not imply a complete production graphical frontend or renderer.
+
 ---
 
 # 44. Out-of-Scope Capabilities
 
-The following are not verified Atlas v0.1 user capabilities:
+The following are not verified Atlas v0.1 user capabilities.
 
 ### Engineering interoperability
 
@@ -1103,9 +1146,9 @@ Similarly, an AI or Agent suggestion should not be treated as canonical engineer
 
 ---
 
-# 47. Practical v0.1 Checklist
+# 47. Practical v0.1 Checklist (Conceptual)
 
-Before considering a Resource workflow complete:
+Use this as a conceptual v0.1 workflow checklist when operating through an available Atlas application surface:
 
 ```text
 [ ] Project is available
@@ -1118,6 +1161,8 @@ Before considering a Resource workflow complete:
 [ ] Validation results have been reviewed
 [ ] Project has been saved where persistence is required
 ```
+
+The checklist does not imply that every item is exposed through a single graphical workflow.
 
 ---
 
@@ -1140,11 +1185,13 @@ Use the engineering specifications when you need the detailed engineering contra
 
 Atlas v0.1 should be used with one fundamental distinction in mind:
 
-> The UI shows and manipulates the Atlas model; it is not the Atlas model.
+> The application and presentation layers show and operate on the Atlas model; they are not the Atlas model.
 
 Resources, their identity, relationships, semantic information, lifecycle, validation, and canonical spatial state belong to the Atlas foundation.
 
-The workspace, selection, camera, panels, SceneNodes, and other presentation structures exist to let users work with that foundation.
+The workspace, selection, camera, panels, SceneNodes, Gizmo, and other presentation structures exist to let applications work with that foundation.
+
+A complete production renderer, graphical frontend, external engineering-format ecosystem, autonomous engineering AI, collaboration platform, and other future capabilities are outside the verified v0.1 scope.
 
 ---
 
@@ -1152,6 +1199,6 @@ The workspace, selection, camera, panels, SceneNodes, and other presentation str
 
 Atlas v0.1 has a verified technical foundation and release-readiness baseline.
 
-This User Guide documents the user-visible workflows that are supported by that foundation and deliberately excludes capabilities that are not verified as implemented.
+This User Guide documents the user/application workflows that are supported by that foundation and deliberately excludes capabilities that are not verified as implemented.
 
 **Atlas v0.1 — User Guide**
